@@ -37,11 +37,11 @@ def key_control_start(key, x, y):
             randint(1, 100),
             randint(1, 60)
         ]
-        # random_values_translate = [
-        #     randint(1, 3), 
-        #     randint(1, 3), 
-        #     randint(1, 3)
-        # ]
+        random_values_translate = [
+            0, 
+            0, 
+            randint(1, 3)
+        ]
         
 def automatic_rotated():
     global rotacionar, glRotatef_x, glRotatef_y, glRotatef_z
@@ -67,7 +67,7 @@ def create_gl_texture(width, height, pbits):
     return id_texture
 
 def load_texture(filename):
-    image = Image.open(filename)
+    image = Image.open(f'src/texture/{filename}')
     ix = image.size[0]
     iy = image.size[1]
     pbits = image.convert("RGBA").tobytes("raw", "RGBA")
@@ -188,8 +188,8 @@ def load_textures():
 def init():
     glutInit(sys.argv)
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH)
-    glutInitWindowSize(1000, 1000)
-    glutInitWindowPosition(-200, -200)
+    glutInitWindowSize(800, 800)
+    glutInitWindowPosition(600, 100)
     glutCreateWindow('Dado OpenGL')
     init_gl()
     load_textures()
