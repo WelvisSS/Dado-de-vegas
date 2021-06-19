@@ -1,2 +1,2 @@
-# dado-da-sorte
+# dado-de-vegas
 Projeto de Computação Gráfica utilizando OpenGL.
