@@ -181,7 +181,7 @@ def showScreen():
 
 def load_textures():
     global id_textures
-    ids = [load_texture(f'Imagem{i}.png') for i in range(1, 7)]    
+    ids = [load_texture(f'd{i}.png') for i in range(1, 7)]    
     id_textures = ids
 
 def init():
