@@ -45,12 +45,15 @@ def timer_rotated_z():
     return timer_z
 
 def key_press(key, x, y):
-    global girar_eixo_x, girar_eixo_y, girar_eixo_z, random_axis, timer_x, timer_y, timer_z
+    global girar_eixo_x, girar_eixo_y, girar_eixo_z
+    global random_axis, timer_x, timer_y, timer_z, random_values_translate
 
     if key == b'\r':# Tecla enter
         timer_x = randint(20, 50)
         timer_y = randint(20, 50)
         timer_z = randint(20, 50)
+
+        random_values_translate = [1, 3, 1]
 
         girar_eixo_x = True
         girar_eixo_y = True
