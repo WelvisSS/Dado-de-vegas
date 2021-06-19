@@ -1,4 +1,4 @@
-# dado-da-sorte
+# Dado de Vegas
 Projeto de Computação Gráfica utilizando OpenGL.
 
 # Como utilizar
