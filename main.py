@@ -246,10 +246,6 @@ rotacionar_x = 0
 rotacionar_y = 0
 rotacionar_z = 0
 
-glTranslatef_x = 0
-glTranslatef_y = 0
-glTranslatef_z = 0
-
 timer_x = 20
 timer_y = 30
 timer_z = 30
