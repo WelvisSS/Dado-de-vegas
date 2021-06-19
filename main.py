@@ -9,6 +9,7 @@ from random import randint
 
 def timer_rotated_x():
     global timer_x, girar_eixo_x, rotacionar_x, random_axis
+    
     if timer_x > 1: 
         timer_x -= 0.1
     else:
