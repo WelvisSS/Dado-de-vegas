@@ -1,3 +1,4 @@
+# Disponível em: https://github.com/WelvisSS/dado-de-vegas
 import OpenGL
 import numpy as np
 from OpenGL.GL import *
