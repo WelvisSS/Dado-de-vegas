@@ -7,51 +7,82 @@ from OpenGL.GLU import *
 from PIL import Image
 from random import randint
 
-def timer_rotated():
-    global timer, glRotatef_x, glRotatef_y, glRotatef_z, girar
-    if timer > 0: timer -= 0.1
-    else: 
-        girar = False
-        timer = 0 
-        #print(f'X: {glRotatef_x}\nY: {glRotatef_y}\nZ: {glRotatef_z}\n')
+def timer_rotated_x():
+    global timer_x, girar_eixo_x, rotacionar_x, random_axis
+    if timer_x > 1: 
+        timer_x -= 0.1
+    else:
+        timer_x = 0 
+        if ((int(rotacionar_x))%90 == 0): girar_eixo_x = False
+        else: rotacionar_x += 0.8
 
-    return timer
+    return timer_x
 
-def key_control(key, x, y):
-    global rotacionar
-        
-    if key == GLUT_KEY_UP:
-        rotacionar += 50
-    elif key == GLUT_KEY_DOWN:
-        rotacionar -= 50
+def timer_rotated_y():
+    global timer_y, girar_eixo_y, rotacionar_y, random_axis
 
-def key_control_start(key, x, y):
-    global girar, timer, random_values_rotate, random_values_translate
-       
+    if timer_y > 1: 
+        timer_y -= 0.1
+    else:
+        timer_y = 0 
+        if ((int(rotacionar_y))%90 == 0): girar_eixo_y = False
+        else: 
+            rotacionar_y += 0.8
+
+    return timer_y
+
+def timer_rotated_z():
+    global timer_z, girar_eixo_z, rotacionar_z, random_axis
+
+    if timer_z > 1: 
+        timer_z -= 0.1
+    else:
+        timer_z = 0 
+        if ((int(rotacionar_z))%90 == 0): girar_eixo_z = False
+        else: 
+            rotacionar_z += 0.8
+
+    return timer_z
+
+def key_press(key, x, y):
+    global girar_eixo_x, girar_eixo_y, girar_eixo_z, random_axis, timer_x, timer_y, timer_z
+
     if key == b'\r':# Tecla enter
-        timer = 20
-        girar = True
-        
-        random_values_rotate = [
-            randint(1, 30),
-            randint(1, 100),
-            randint(1, 60)
-        ]
-        random_values_translate = [
-            0, 
-            0, 
-            randint(1, 3)
-        ]
-        
-def automatic_rotated():
-    global rotacionar, glRotatef_x, glRotatef_y, glRotatef_z
+        timer_x = randint(20, 50)
+        timer_y = randint(20, 50)
+        timer_z = randint(20, 50)
 
-    if girar:
-        tempo = timer_rotated()
-        rotacionar += tempo
-        glRotatef_x += random_values_rotate[0]
-        glRotatef_y += random_values_rotate[1]
-        glRotatef_z += random_values_rotate[2]
+        girar_eixo_x = True
+        girar_eixo_y = True
+        girar_eixo_z = True
+
+        random_axis = [
+            randint(0, 1), 
+            randint(0, 1), 
+            randint(0, 1)
+        ]
+        #Impedindo que x, y e z sejam 0 na hora de jogar o dado.
+        while (random_axis[0] + random_axis[1] + random_axis[2]) <= 1:
+            random_axis = [
+                randint(0, 1), 
+                randint(0, 1), 
+                randint(0, 1)
+            ]
+
+def automatic_rotated():
+    global rotacionar_x, rotacionar_y, rotacionar_z
+    tempo = 0
+    if girar_eixo_x:
+        tempo = timer_rotated_x()
+        rotacionar_x += tempo
+
+    if girar_eixo_y:
+        tempo = timer_rotated_y()
+        rotacionar_y += tempo
+    
+    if girar_eixo_z:
+        tempo = timer_rotated_z()
+        rotacionar_z += tempo
 
 def create_gl_texture(width, height, pbits):
     id_texture = glGenTextures(1)
@@ -89,7 +120,7 @@ def init_gl():
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
 
-def cubo():
+def dado():    
     glBindTexture(GL_TEXTURE_2D, id_textures[0])
     glBegin(GL_QUADS)
     glTexCoord2f(0.0, 0.0)
@@ -161,23 +192,29 @@ def cubo():
     glTexCoord2f(0.0, 1.0)
     glVertex3f(-1.0,  1.0, -1.0)
     glEnd()
-
+    
 def showScreen():
     global id_textures
-    global rotacionar
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
-    glRotatef(rotacionar, glRotatef_x, glRotatef_y, glRotatef_z)
+    
+    glRotatef(rotacionar_x, random_axis[0], 0, 0)
+    glRotatef(rotacionar_y, 0, random_axis[1], 0)
+    glRotatef(rotacionar_z, 0, 0, random_axis[2])
+
     glScalef(40, 40, 40)
+
     glTranslatef(
         random_values_translate[0],
         random_values_translate[1], 
         random_values_translate[2]
     )
-    cubo()
+    dado()
+
     automatic_rotated()
-    glutKeyboardFunc(key_control_start)
+    glutKeyboardFunc(key_press)
     glutSwapBuffers()
 
 def load_textures():
@@ -190,26 +227,33 @@ def init():
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH)
     glutInitWindowSize(800, 800)
     glutInitWindowPosition(600, 100)
-    glutCreateWindow('Dado OpenGL')
+    glutCreateWindow('Dado de Vegas')
     init_gl()
     load_textures()
-    glutSpecialFunc(key_control)
     glutDisplayFunc(showScreen)
     glutIdleFunc(showScreen)
 
     glutMainLoop()
 
+random_axis = [0,0,0]
 id_textures = []
-rotacionar = 0
-glRotatef_x = 1
-glRotatef_y = 1 
-glRotatef_z = 0
+
+rotacionar_x = 0
+rotacionar_y = 0
+rotacionar_z = 0
 
 glTranslatef_x = 0
 glTranslatef_y = 0
 glTranslatef_z = 0
-timer = 20
+
+timer_x = 20
+timer_y = 30
+timer_z = 30
+
+girar_eixo_x = False
+girar_eixo_y = False
+girar_eixo_z = False
+
 random_values_translate = [0, 0, 0]
-random_values_rotate = [1, 1, 1]
-girar = False
+
 init()
