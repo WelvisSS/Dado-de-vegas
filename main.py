@@ -14,7 +14,9 @@ def timer_rotated_x():
         timer_x -= 0.1
     else:
         timer_x = 0 
-        if ((int(rotacionar_x))%90 == 0): girar_eixo_x = False
+        if ((int(rotacionar_x))%90 == 0): 
+            girar_eixo_x = False
+            rotacionar_x = int(rotacionar_x)
         else: rotacionar_x += 0.8
 
     return timer_x
@@ -26,7 +28,9 @@ def timer_rotated_y():
         timer_y -= 0.1
     else:
         timer_y = 0 
-        if ((int(rotacionar_y))%90 == 0): girar_eixo_y = False
+        if ((int(rotacionar_y))%90 == 0): 
+            girar_eixo_y = False
+            rotacionar_y = int(rotacionar_y)
         else: 
             rotacionar_y += 0.8
 
@@ -39,7 +43,9 @@ def timer_rotated_z():
         timer_z -= 0.1
     else:
         timer_z = 0 
-        if ((int(rotacionar_z))%90 == 0): girar_eixo_z = False
+        if ((int(rotacionar_z))%90 == 0): 
+            girar_eixo_z = False
+            rotacionar_z = int(rotacionar_z)
         else: 
             rotacionar_z += 0.8
 
@@ -50,11 +56,11 @@ def key_press(key, x, y):
     global random_axis, timer_x, timer_y, timer_z, random_values_translate
 
     if key == b'\r':# Tecla enter
-        timer_x = randint(20, 50)
-        timer_y = randint(20, 50)
-        timer_z = randint(20, 50)
+        timer_x = randint(5, 20)
+        timer_y = randint(5, 20)
+        timer_z = randint(5, 20)
 
-        random_values_translate = [1, 3, 1]
+        random_values_translate = [3, 1, 1]
 
         girar_eixo_x = True
         girar_eixo_y = True
