@@ -7,6 +7,7 @@ from OpenGL.GLU import *
 from PIL import Image
 from random import randint
 
+
 def timer_rotated_x():
     global timer_x, girar_eixo_x, rotacionar_x, random_axis
     
@@ -108,7 +109,7 @@ def create_gl_texture(width, height, pbits):
     return id_texture
 
 def load_texture(filename):
-    image = Image.open(f'src/texture/{filename}')
+    image = Image.open(f'src/texture/Sem Sombra/{filename}')
     ix = image.size[0]
     iy = image.size[1]
     pbits = image.convert("RGBA").tobytes("raw", "RGBA")
