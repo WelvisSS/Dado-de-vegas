@@ -7,9 +7,8 @@ from OpenGL.GLU import *
 from PIL import Image
 from random import randint
 
-
 def timer_rotated_x():
-    global timer_x, girar_eixo_x, rotacionar_x, random_axis
+    global timer_x, girar_eixo_x, rotacionar_x
     
     if timer_x > 1: 
         timer_x -= 0.1
@@ -23,7 +22,7 @@ def timer_rotated_x():
     return timer_x
 
 def timer_rotated_y():
-    global timer_y, girar_eixo_y, rotacionar_y, random_axis
+    global timer_y, girar_eixo_y, rotacionar_y
 
     if timer_y > 1: 
         timer_y -= 0.1
@@ -38,7 +37,7 @@ def timer_rotated_y():
     return timer_y
 
 def timer_rotated_z():
-    global timer_z, girar_eixo_z, rotacionar_z, random_axis
+    global timer_z, girar_eixo_z, rotacionar_z
 
     if timer_z > 1: 
         timer_z -= 0.1
@@ -53,7 +52,7 @@ def timer_rotated_z():
     return timer_z
 
 def key_press(key, x, y):
-    global girar_eixo_x, girar_eixo_y, girar_eixo_z
+    global girar_eixo_x, girar_eixo_y, girar_eixo_z, translate
     global random_axis, timer_x, timer_y, timer_z, random_values_translate
 
     if key == b'\r':# Tecla enter
@@ -79,6 +78,10 @@ def key_press(key, x, y):
                 randint(0, 1), 
                 randint(0, 1)
             ]
+
+    if key == b't' or key == b'T':
+        random_values_translate = [0, 0, 0]
+        translate = not translate
 
 def automatic_rotated():
     global rotacionar_x, rotacionar_y, rotacionar_z
@@ -217,11 +220,13 @@ def showScreen():
 
     glScalef(40, 40, 40)
 
-    glTranslatef(
-        random_values_translate[0],
-        random_values_translate[1], 
-        random_values_translate[2]
-    )
+    if translate:# Habilita e desabilita a translação
+        glTranslatef(
+            random_values_translate[0],
+            random_values_translate[1], 
+            random_values_translate[2]
+        )
+
     dado()
 
     automatic_rotated()
@@ -248,6 +253,7 @@ def init():
 
 random_axis = [0,0,0]
 id_textures = []
+translate = True
 
 rotacionar_x = 0
 rotacionar_y = 0
