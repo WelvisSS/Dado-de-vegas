@@ -8,7 +8,7 @@ Para fazer o lançamento do dado, basta pressionar a tecla "Enter", que iniciar�
 
 # Função Adicional
 
-Precionando a tecla "t" é habilitada ou desabilitada a função de translação do dado, girando somento no seu próprio eixo.
+Precionando a tecla "t" é habilitada ou desabilitada a função de translação do dado, girando somento no seu próprio eixo ou não.
 # Demonstração
 
 ## Translação Desabilitada
